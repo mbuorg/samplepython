@@ -1,4 +1,4 @@
-name: Python web app
+name: Python web-app
 
 on:
   [push]
