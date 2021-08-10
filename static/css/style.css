@@ -1,0 +1,10 @@
+h1 {
+    text-align: center;
+    border: 2px #eee solid;
+    color: brown;
+    padding: 10px;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
