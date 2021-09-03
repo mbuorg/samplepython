@@ -3,7 +3,7 @@ name: ARM Template Based CICD workflow
 on:
   push:
     branches:
-      - main
+      - main1
 
 env:
   AZURE_WEBAPP_NAME: 'provisioned-python-app' 
