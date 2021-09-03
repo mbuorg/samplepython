@@ -1,7 +1,9 @@
 name: Python web-app
 
 on:
-  [push]
+  push:
+    branches:
+      - master1
 
 env:
   AZURE_WEBAPP_NAME: 'toolkitdemo-python' 
