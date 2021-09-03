@@ -16,7 +16,7 @@ jobs:
   provisioning:
     # The type of runner that the job will run on
     runs-on: Windows-latest
-    if: github.ref == 'refs/heads/master'
+    #if: github.ref == 'refs/heads/master'
     steps:
 
       - uses: actions/checkout@v2
