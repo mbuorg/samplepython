@@ -8,7 +8,7 @@
             "type": "String"
         },
 	"sites_new_pythonapp_name": {
-            "defaultValue": "provisioned-python-app",
+            "defaultValue": "samplepythonapp",
             "type": "String"
         }
   },
