@@ -2,7 +2,9 @@
 name: Python web app with terraform
 
 on:
-  [push]
+  push:
+    branches:
+      main1
 
 env:
   AZURE_RESOURCE_NAME: 'example-resources1'
@@ -46,7 +48,7 @@ jobs:
        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
     
   codeQL:
-    name: Analyze
+    name: CodeQL Analyze
     runs-on: ubuntu-latest
     permissions:
       actions: read
@@ -72,6 +74,7 @@ jobs:
         uses: github/codeql-action/analyze@v1
   
   terraform:
+    name: Provision resources using Terraform
     runs-on: ubuntu-latest
     defaults:
       run:
