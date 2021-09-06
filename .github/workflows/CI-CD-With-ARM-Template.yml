@@ -3,7 +3,7 @@ name: ARM Template Based CICD workflow
 on:
   push:
     branches:
-      - main1
+      - main
 
 env:
   AZURE_WEBAPP_NAME: 'toolkitsamplepythonapp' 
@@ -13,40 +13,9 @@ env:
 
 
 jobs:
-  provisioning:
-    # The type of runner that the job will run on
-    runs-on: Windows-latest
-    #if: github.ref == 'refs/heads/master'
-    steps:
 
-      - uses: actions/checkout@v2
-
-      - name: Azure Login
-        uses: Azure/login@v1.1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-        # Set this value to true to enable Azure PowerShell Login in addition to Az CLI login
-          enable-AzPSSession: true
-
-      - run: |
-          $rsgExists = az group exists -n ${{ env.AZURE_GROUP_NAME }}
-          if ($rsgExists -eq 'false') {
-              az group create -l eastus -n ${{ env.AZURE_GROUP_NAME }}
-          }
-      - name: Run ARM deploy
-        uses: azure/arm-deploy@v1
-        with:
-          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
-          resourceGroupName: ${{ env.AZURE_GROUP_NAME }}
-          template: ./template/azuredeploy.json
-
-      - name: Logout
-        run: |
-          az logout
-    
   build:
     runs-on: ubuntu-latest
-    needs: provisioning
     steps:
     - uses: actions/checkout@v2
       with:
@@ -86,7 +55,66 @@ jobs:
       env:
        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
   
-  
+  codeQL:
+    name: CodeQL Analyze
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ 'python']
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v1
+        with:
+          languages: ${{ matrix.language }}
+      
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v1
+        
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v1
+        
+  provisioning:
+    # The type of runner that the job will run on
+    runs-on: Windows-latest
+    needs: codeQL
+    #if: github.ref == 'refs/heads/master'
+    steps:
+
+      - uses: actions/checkout@v2
+
+      - name: Azure Login
+        uses: Azure/login@v1.1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+        # Set this value to true to enable Azure PowerShell Login in addition to Az CLI login
+          enable-AzPSSession: true
+
+      - run: |
+          $rsgExists = az group exists -n ${{ env.AZURE_GROUP_NAME }}
+          if ($rsgExists -eq 'false') {
+              az group create -l eastus -n ${{ env.AZURE_GROUP_NAME }}
+          }
+      - name: Run ARM deploy
+        uses: azure/arm-deploy@v1
+        with:
+          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
+          resourceGroupName: ${{ env.AZURE_GROUP_NAME }}
+          template: ./template/azuredeploy.json
+
+      - name: Logout
+        run: |
+          az logout
+    
+
         
    
   deploy:
@@ -121,7 +149,7 @@ jobs:
     - name: ZAP Scan
       uses: zaproxy/action-baseline@v0.4.0
       with:
-        target: 'http://toolkitsamplepythonapp.azurewebsites.net'
+        target: 'http://${{ env.AZURE_WEBAPP_NAME }}.azurewebsites.net'
       
         
   
