@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  AZURE_WEBAPP_NAME: 'samplepythonapp' 
+  AZURE_WEBAPP_NAME: 'toolkitsamplepythonapp' 
   AZURE_WEBAPP_PACKAGE_PATH: '.' 
   SONAR_HOST_URL: 'http://13.68.189.117:8080'
   AZURE_GROUP_NAME: 'toolkit-sample-armtemplate-rgp'
@@ -121,7 +121,7 @@ jobs:
     - name: ZAP Scan
       uses: zaproxy/action-baseline@v0.4.0
       with:
-        target: 'http://samplepythonapp.azurewebsites.net'
+        target: 'http://toolkitsamplepythonapp.azurewebsites.net'
       
         
   
