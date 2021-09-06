@@ -4,7 +4,7 @@ name: Python web app with terraform
 on:
   push:
     branches:
-      -main
+      - main
 
 env:
   AZURE_RESOURCE_NAME: 'example-resources1'
