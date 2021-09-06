@@ -9,7 +9,7 @@ env:
   AZURE_WEBAPP_NAME: 'example-app-service-tf1' 
   webapp_for_link: example-app-service-tf1
   AZURE_WEBAPP_PACKAGE_PATH: '.' 
-  SONAR_HOST_URL: 'http://13.68.189.117:8080'
+  SONAR_HOST_URL: 'http://13.82.221.244:8080'
 
 jobs:
   build:
