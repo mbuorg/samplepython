@@ -8,7 +8,7 @@
             "type": "String"
         },
 	"sites_new_pythonapp_name": {
-            "defaultValue": "samplepythonapp",
+            "defaultValue": "toolkitsamplepythonapp",
             "type": "String"
         }
   },
