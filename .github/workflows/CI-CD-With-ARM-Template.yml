@@ -3,13 +3,13 @@ name: ARM Template Based CICD workflow
 on:
   push:
     branches:
-      - main1
+      - main
 
 env:
-  AZURE_WEBAPP_NAME: 'provisioned-python-app' 
+  AZURE_WEBAPP_NAME: 'samplepythonapp' 
   AZURE_WEBAPP_PACKAGE_PATH: '.' 
   SONAR_HOST_URL: 'http://13.68.189.117:8080'
-  AZURE_GROUP_NAME: 'toolkit-template-generated-rgp'
+  AZURE_GROUP_NAME: 'toolkit-sample-armtemplate-rgp'
 
 
 jobs:
@@ -121,7 +121,7 @@ jobs:
     - name: ZAP Scan
       uses: zaproxy/action-baseline@v0.4.0
       with:
-        target: 'http://provisioned-python-app.azurewebsites.net'
+        target: 'http://samplepythonapp.azurewebsites.net'
       
         
   
