@@ -2,7 +2,9 @@
 name: codeql
 
 on:
-  [push]
+  push:
+    branches:
+      main1
 
 env:
   AZURE_RESOURCE_NAME: 'example-resources1'
