@@ -3,12 +3,12 @@ name: ARM Template Based CICD workflow
 on:
   push:
     branches:
-      - main
+      - main1
 
 env:
   AZURE_WEBAPP_NAME: 'toolkitsamplepythonapp' 
   AZURE_WEBAPP_PACKAGE_PATH: '.' 
-  SONAR_HOST_URL: 'http://13.82.221.244:8080'
+  SONAR_HOST_URL: 'http://20.102.63.62:8080'
   AZURE_GROUP_NAME: 'toolkit-sample-armtemplate-rgp'
 
 
